@@ -1,5 +1,9 @@
 import 'package:donut_app/utils/my_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:donut_app/tab/burger_tab.dart';
+import 'package:donut_app/tab/donut_tab.dart';
+import 'package:donut_app/tab/pizza_tab.dart';
+import 'package:donut_app/tab/smoothie_tab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TabController _tabController;
   List<Widget> myTabs = [
     //Donuts tab
     const MyTab(iconPath: 'assets/icons/donut.png', iconName: 'Donuts'),
@@ -17,8 +20,6 @@ class _HomePageState extends State<HomePage> {
     const MyTab(iconPath: 'assets/icons/burger.png', iconName: 'Burgers'),
     //Smoothies tab
     const MyTab(iconPath: 'assets/icons/smoothie.png', iconName: 'Smoothies'),
-    //Pancakes tab
-    const MyTab(iconPath: 'assets/icons/pancakes.png', iconName: 'Pancakes'),
     //Pizza tab
     const MyTab(iconPath: 'assets/icons/pizza.png', iconName: 'Pizza'),
   ];
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     'EAT',
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
                     ),
@@ -67,17 +68,54 @@ class _HomePageState extends State<HomePage> {
             // 3. contenido de las pestañas
             Expanded(
               child: TabBarView(
-                controller: _tabController,
-                children: [
-                  DonutTab(),
-                  BurgerTab(),
-                  SmoothieTab(),
-                  PancakeTab(),
-                  PizzaTab(),
-                ],
+                children: [DonutTab(), BurgerTab(), SmoothieTab(), PizzaTab()],
               ),
             ),
             // 4. carrito (cart)
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '2 items | \$45',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                          'Delivery charges not included',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink[400],
+                    ),
+                    child: Text(
+                      'View Cart',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
