@@ -1,3 +1,4 @@
+import 'package:donut_app/utils/cart_model.dart';
 import 'package:flutter/material.dart';
 
 class DonutTile extends StatelessWidget {
@@ -6,6 +7,7 @@ class DonutTile extends StatelessWidget {
   final dynamic donutColor;
   final String donutImagePath;
   final String donutProvider;
+  final String category;
 
   const DonutTile({
     super.key,
@@ -14,6 +16,7 @@ class DonutTile extends StatelessWidget {
     this.donutColor,
     required this.donutImagePath,
     required this.donutProvider,
+    this.category = 'Donut',
   });
 
   @override
@@ -39,7 +42,7 @@ class DonutTile extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: donutColor[200],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(24),
                       bottomLeft: Radius.circular(24),
                     ),
@@ -55,34 +58,48 @@ class DonutTile extends StatelessWidget {
                 ),
               ],
             ),
-            //Imagen de la Dona
+            //Imagen del producto
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               child: Image.asset(donutImagePath),
             ),
-            //Nombre de la Dona
+            //Nombre del producto
             Text(
               donutFlavor,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             //Espacio entre textos
             const SizedBox(height: 4),
-            //Nombredel proveedor
-            Text(donutProvider, style: TextStyle(color: Colors.grey[1600])),
-            //Espacio entre textos
+            //Nombre del proveedor
+            Text(donutProvider, style: TextStyle(color: Colors.grey[600])),
             //Iconos de fav y carrito
             Padding(
-              padding: const EdgeInsetsGeometry.all(12),
+              padding: const EdgeInsets.all(12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_border_outlined, color: Colors.pink[400]),
-                  Text(
-                    'Add',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      CartModel.instance.add(
+                        name: donutFlavor,
+                        category: category,
+                        price: double.parse(donutPrice),
+                        imagePath: donutImagePath,
+                        color: donutColor,
+                      );
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      child: Text(
+                        'Add',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
                   ),
                 ],
